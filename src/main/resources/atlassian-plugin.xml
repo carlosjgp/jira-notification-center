@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}" plugins-version="2">
+  <plugin-info>
+    <description>${project.description}</description>
+    <version>${project.version}</version>
+    <vendor name="${project.organization.name}" url="${project.organization.url}"/>
+    <param name="plugin-icon">images/pluginIcon.png</param>
+    <param name="plugin-logo">images/pluginLogo.png</param>
+  </plugin-info>
+  <!-- add our i18n resource -->
+  <resource type="i18n" name="i18n" location="notification-center"/>
+  <!-- add our web resources -->
+  <web-resource key="notification-center-resources" name="notification-center Web Resources">
+    <dependency>com.atlassian.auiplugin:ajs</dependency>
+    <resource type="download" name="notification-center.css" location="/css/notification-center.css"/>
+    <resource type="download" name="notification-center.js" location="/js/notification-center.js"/>
+    <resource type="download" name="images/" location="/images"/>
+    <context>notification-center</context>
+  </web-resource>
+  <!-- publish our component -->
+  <component key="notificationCenterComponent" class="com.carlosjgp.jira.notification.NotificationCenterImpl" public="true">
+    <interface>com.carlosjgp.jira.notification.NotificationCenter</interface>
+  </component>
+  <!-- import from the product container -->
+  <component-import key="applicationProperties" interface="com.atlassian.sal.api.ApplicationProperties"/>
+  <web-section name="mySection" i18n-name-key="my-section.name" key="my-section" location="client-sites-link" weight="1000">
+    <description key="my-section.description">The mySection Plugin</description>
+  </web-section>
+  <web-item name="Notifications" i18n-name-key="notificationcenter.name" key="notifications" section="system.top.navigation.bar" weight="1000">
+    <description key="notificationcenter.description">Current user notifications</description>
+    <label key="notificationcenter.label"></label>
+    <link linkId="notificationcenter-link"></link>
+  </web-item>
+</atlassian-plugin>
